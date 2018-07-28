@@ -7,6 +7,7 @@ class Posts(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=200)
     text = models.TextField()
+    last_modified = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=False)
     author = models.ForeignKey(to=User, on_delete=models.CASCADE)
 
@@ -21,8 +22,8 @@ class Posts(models.Model):
 class Comments(models.Model):
     post = models.ForeignKey(to=Posts, on_delete=models.CASCADE)
     author = models.ForeignKey(to=User, on_delete=models.CASCADE)
-    created = models.DateTimeField(auto_now=True)
-    parrent_id = models.IntegerField(null=True, default=None)
+    created = models.DateTimeField(auto_now_add=True)
+    parent_id = models.IntegerField(null=True, default=None)
     text = models.TextField()
 
     def __str__(self):

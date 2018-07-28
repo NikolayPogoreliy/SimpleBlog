@@ -1,7 +1,31 @@
 from rest_framework import serializers
+from django.contrib.auth.models import User
+
 from .models import Posts, Comments
 
-class PostSerializer(serializers.ModelSerializer):
+
+class BasicPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Posts
         fields = ('id', 'title', 'text', 'is_published', 'author')
+
+
+class PostListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Posts
+        fields = ('id', 'title', 'text', 'created', 'author')
+
+
+class PostDetailSerializer(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='author.username')
+
+    class Meta:
+        model = Posts
+        fields = ('url','id', 'title', 'text', 'created', 'author', 'last_modified', 'is_published')
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('url', 'id', 'username', 'posts')
