@@ -9,7 +9,7 @@ class Posts(models.Model):
     text = models.TextField()
     last_modified = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=False)
-    author = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    author = models.ForeignKey(to=User, related_name='posts', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
