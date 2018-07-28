@@ -16,12 +16,19 @@ class PostListSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'text', 'created', 'author')
 
 
+class UserInfoSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ('url', 'first_name', 'last_name')
+
+
 class PostDetailSerializer(serializers.HyperlinkedModelSerializer):
-    author = serializers.ReadOnlyField(source='author.username')
+    # author = serializers.ReadOnlyField(source='author.username')
+    author = UserInfoSerializer(read_only=True)
 
     class Meta:
         model = Posts
-        fields = ('url','id', 'title', 'text', 'created', 'author', 'last_modified', 'is_published')
+        fields = ('url', 'id', 'title', 'text', 'created', 'author', 'last_modified', 'is_published')
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):

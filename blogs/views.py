@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics, permissions, viewsets
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 
 
@@ -37,12 +37,12 @@ from .permissions import IsAuthor
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = User.objects.exclude(is_staff=True)
+    queryset = User.objects.exclude(is_staff=True).select_related()
     serializer_class = UserSerializer
 
 
 class PostsViewSet(viewsets.ModelViewSet):
-    queryset =  Posts.objects.all()
+    queryset = Posts.objects.all().select_related()
     serializer_class = PostDetailSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAuthor)
 
