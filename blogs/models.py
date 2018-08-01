@@ -16,7 +16,7 @@ class Posts(models.Model):
 
     class Meta:
         verbose_name_plural = 'Posts'
-        ordering = ['created']
+        ordering = ['-created']
 
 
 class Comments(models.Model):

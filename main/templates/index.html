@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>SimpleBlog</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
+        <script src='{% static "js/core.js" %}' ></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></head>
+        <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/simpleblog.css' %}" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+        <script src='{% static "js/simpleblog.js" %}' ></script>
+    </head>
+    <body>
+        <header class="container-fluid">
+            
+                <nav class="row navbar navbar-header navbar-expand-lg custom-header">
+                    <div class="col sol-sm-12 col-md-3">
+                        <img src="{% static 'img/logo.svg' %}" />
+                    </div>
+                    <div class="col col-sm-12 col-md-5 mr-auto">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a id="home-link" class="nav-link" href="/">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="all-users-link" data-url="{% url 'user-list' %}" data-method="get" class="nav-link all-users-link prevented" href="{% url 'user-list' %}">Authors</a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="all-posts-link" data-url="{% url 'posts-list' %}" data-method="get" class="nav-link all-posts-link prevented" href="{% url 'posts-list' %}">Articles</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col col-sm-12 col-md-2">
+                        <button class="btn btn-block btn-add-post" data-url="{% url 'posts-create' %}">ADD POST</button>
+                    </div>
+                    <div class="col col-auto">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'rest_framework:logout' %}">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+           
+        </header>
+        <main class="container-fluid">
+
+            {% if not user.is_authenticated %}
+            <div id="login-form-container" class="hidable row justify-content-sm-center">
+                <div class="col-sm-auto"></div>
+                <div class="col-sm-auto">
+                    <form action="{% url 'rest_framework:login' %}" role="form" method="post">
+                        <div class="form-group">
+                            {% csrf_token %}
+                            <input class="form-control" type="text" id="username" name="username" placeholder="Login">
+                            <input class="form-control" type="password" id="password" name="password" placeholder="Password">
+                            <button class="btn btn-primary btn-block" type="submit">Log In</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-auto"></div>
+            </div>
+            {% else %}
+            <script >
+                const user = "{{user.username}}";
+            </script>
+            <!--<div style="display: none;">{% csrf_token %}</div>-->
+            <div id="result-row" class="row justify-content-sm-start align-items-start"></div>
+            {% endif %}
+        </main>
+        <footer class="container-fluid">
+            <div  class="row justify-content-end">
+                <div class="col-2 ml-auto">
+                    <img src="{% static 'img/FB.png' %}" alt="Facebook" />
+                     <img src="{% static 'img/TW.png' %}" alt="Twitter" />
+                    <img src="{% static 'img/LI.png' %}" alt="LinkedIn" />
+                    <img src="{% static 'img/GG.png' %}" alt="Google" />
+                </div>
+
+            </div>
+        </footer>
+    </body>
+</html>

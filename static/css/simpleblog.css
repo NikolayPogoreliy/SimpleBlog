@@ -1,0 +1,139 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 28.07.2018, 22:30:51
+    Author     : User
+*/
+body{
+    color: #3c3b3b;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+a {
+    color: #3c3b3b;
+}
+a:hover {
+    color:#838383;
+    text-decoration: none;
+}
+footer{
+    max-height: 100px;
+    background-color: #e8e8e8;
+}
+footer .row {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+footer .row img{
+    width: 15%;
+}
+nav.navbar{
+    box-shadow: 0px 2px 11.7px 1.3px rgba(74, 70, 70, 0.4);
+    margin-top: 0 !important;
+    font-size: 20px;
+}
+nav.navbar li {
+    margin: 0 25px;
+}
+nav.navbar a {
+    font-size: 24px;
+    color: #3c3b3b;
+}
+.custom-header{
+    max-height: 100px;
+}
+.custom-header img{
+    height: 100%;
+    max-height: 100px;
+}
+input {
+    margin-bottom: 10px;
+}
+
+.row{
+    margin-top:20px;
+}
+
+#login-form-container {
+    margin-top: 30vh;
+}
+
+ul.navbar-nav li::last-child {
+    float:right;
+}
+
+.custom-badge{
+    margin-left: 30px !important;
+    max-height: 17px !Important;
+}
+span.italic{
+    float: right;
+    font-size:12px;
+    font-style: italic;
+    color: #717171;
+}
+.btn-add-post{
+    bacgroound-color: #bfe7f8;
+    font-size: 20px;
+    font-weight: 500;
+}
+#last-post-img img{
+    width: 100%;
+}
+#last-post-img, #last-post{
+    margin:60px 0;
+}
+.top-story-container{
+    margin: 60px 0;
+    padding: 0 15px;
+}
+.top-story-container img{
+    width: 100%;
+}
+.invisible{
+    display: none;
+}
+.visible{
+    display:inherit;
+}
+.last-post-title, .all-posts-title{
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 72px;
+}
+.all-posts-title{
+    padding-left: 50px;
+}
+.last-post-link{
+    color:#93d4ee;
+}
+.top-posts-container{
+    margin-bottom: 60px;
+}
+.top-story img{
+    width:100%;
+}
+.random-post-title{
+    font-size: 24px;
+}
+.all-posts-container{
+    padding: 15px 0;
+    margin-top: 0;
+}
+.all-posts-container, #all-posts-title-container{
+    border-bottom: 1px solid #959595;
+}
+hr {
+    color:#959595;
+}
+.created-author{
+
+}
+.post-title{
+    font-size: 36px;
+    line-height: 52px;
+}

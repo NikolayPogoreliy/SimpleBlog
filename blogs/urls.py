@@ -20,14 +20,14 @@ class PostsRouter(routers.SimpleRouter):
             detail=True
         ),
         routers.Route(
-            url=r'^{prefix}/create{trailing_slash}$',
+            url=r'^{prefix}/create/$',
             mapping={'post': 'create'},
             name='{basename}-create',
-            initkwargs={'suffix': 'Detail'},
-            detail=True
+            initkwargs={'suffix': 'List'},
+            detail=False
         ),
         routers.Route(
-            url=r'^{prefix}/{lookup}/update{trailing_slash}$',
+            url=r'^{prefix}/{lookup}/update/$',
             mapping={'put': 'update'},
             name='{basename}-update',
             initkwargs={'suffix': 'Detail'},
@@ -43,6 +43,7 @@ router.register(r'', views.PostsViewSet)
 
 
 urlpatterns = [
+    # url(r'^create/$', views.PostCreate.as_view(), name='posts-create'),
     url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
                ]

@@ -1,39 +1,13 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from rest_framework import generics, permissions, viewsets
-from rest_framework.decorators import api_view, action
-from rest_framework.response import Response
+from rest_framework import permissions, viewsets, views, response
+from rest_framework import status
 
 
 from .models import Posts
-from .serializers import PostListSerializer, PostDetailSerializer, UserSerializer
-from .permissions import IsAuthor
+from .serializers import PostDetailSerializer, UserSerializer
+from .permissions import IsAuthor, MyPermission
 # Create your views here.
-
-
-# class PostList(generics.ListCreateAPIView):
-#     queryset = Posts.objects.all()
-#     serializer_class = PostDetailSerializer
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#
-#     def perfom_create(self, serializer):
-#         serializer.save(author=self.request.user)
-#
-#
-# class PostDetail(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Posts.objects.all()
-#     serializer_class = PostDetailSerializer
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAuthor)
-
-
-# class UserList(generics.ListAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-#
-#
-# class UserDetail(generics.RetrieveAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
@@ -42,9 +16,22 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class PostsViewSet(viewsets.ModelViewSet):
-    queryset = Posts.objects.all().select_related()
+    queryset = Posts.objects.filter(is_published=True).select_related()
     serializer_class = PostDetailSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAuthor)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAuthor, MyPermission)
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+
+class PostCreate(views.APIView):
+    queryset = Posts.objects.all().select_related()
+    def post(self, request, format=None):
+        serializer = PostDetailSerializer(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            # print(serializer.data)
+            # serializer.data.author = request.user.id
+            serializer.save()
+            return response.Response(serializer.data, status=status.HTTP_201_CREATED)
+        return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
