@@ -59,16 +59,6 @@ function createTagElement(tagname, cls='', id='', extraData=''){
     return ele;
 }
 
-
-function getFromServer(url, method, callback){
-    $.ajax({
-        url: url,
-        type: method,
-        dataType: 'json',
-        success: callback
-    });
-}
-
 function getAllUsers(url){
     $.ajax({
         url: url,
@@ -109,7 +99,6 @@ function updatePost(e){
     var data = {
         title: document.getElementById('title-input').value,
         text: document.getElementById('text-input').value,
-//        csrfmiddlewaretoken: getCookie('csrftoken'),
         is_published: document.getElementById('is-published').checked,
     }
     $.ajax({
@@ -132,7 +121,6 @@ function createPost(e){
     var data = {
         title: document.getElementById('title-input').value,
         text: document.getElementById('text-input').value,
-//        csrfmiddlewaretoken: getCookie('csrftoken'),
         is_published: document.getElementById('is-published').checked,
         author: author_id
     }
@@ -207,7 +195,7 @@ function allPostsCallback(data){
     container.appendChild(title);
     parentContainer.appendChild(container);
 
-    data.forEach(function(item){
+    function repeatingContent(item){
         var outerContainer = createTagElement('div', 'col-10 offset-sm-1 row align-items-center all-posts-container')
         var container = createTagElement('div','col-10');
         var p = createTagElement('p', 'created-author');
@@ -235,7 +223,13 @@ function allPostsCallback(data){
         container.appendChild(img);
         outerContainer.appendChild(container);
         parentContainer.appendChild(outerContainer);
-    });
+    }
+    try{
+        data.forEach(repeatingContent);
+    } catch(e) {
+        repeatingContent(data);
+    }
+
 
 }
 
@@ -314,7 +308,7 @@ function retrievePostCallback(data){
     if(user==data.author.username) {
         var container = createTagElement('div', 'col-12 row');
         var button = createTagElement('button', 'btn btn-block btn-sm pre-update','pre-update','{"innerText":"EDIT"}');
-        button.dataset['url'] = data.url;
+        button.dataset['url'] = data.url+'update/';
         button.addEventListener('click', preUpdatePost);
         container.appendChild(button);
         postContainer.appendChild(container);
@@ -452,7 +446,7 @@ function getPostCreationForm(url){
     parentContainer.appendChild(container);
 
     var container = createTagElement('div', 'col-10 offset-sm-1 form-group')
-    var input = createTagElement('textarea','form-control','text-input','{"name":"text-input", "rows":"30"}');
+    var input = createTagElement('textarea','form-control','text-input','{"name":"text-input", "rows":"20"}');
     var label = createTagElement('label','form-check-label','','{"for":"text-input", "innerText": "Text"}');
     container.appendChild(input);
     container.appendChild(label);

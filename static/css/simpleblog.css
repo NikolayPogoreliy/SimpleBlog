@@ -59,9 +59,11 @@ input {
 }
 
 #login-form-container {
-    margin-top: 30vh;
+    height: 72vh;
 }
-
+main{
+    min-height: 72vh;
+}
 ul.navbar-nav li::last-child {
     float:right;
 }
