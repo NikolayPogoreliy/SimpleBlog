@@ -134,6 +134,7 @@ function createPost(e){
         text: document.getElementById('text-input').value,
 //        csrfmiddlewaretoken: getCookie('csrftoken'),
         is_published: document.getElementById('is-published').checked,
+        author: author_id
     }
     $.ajax({
         url: url,
@@ -313,7 +314,7 @@ function retrievePostCallback(data){
     if(user==data.author.username) {
         var container = createTagElement('div', 'col-12 row');
         var button = createTagElement('button', 'btn btn-block btn-sm pre-update','pre-update','{"innerText":"EDIT"}');
-        button.dataset['url'] = data.url+'update/';
+        button.dataset['url'] = data.url;
         button.addEventListener('click', preUpdatePost);
         container.appendChild(button);
         postContainer.appendChild(container);

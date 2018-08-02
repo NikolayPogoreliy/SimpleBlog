@@ -45,7 +45,7 @@ and open the template in the editor.
                         </ul>
                     </div>
                     <div class="col col-sm-12 col-md-2">
-                        <button class="btn btn-block btn-add-post" data-url="{% url 'posts-create' %}">ADD POST</button>
+                        <button class="btn btn-block btn-add-post" data-url="{% url 'posts-list' %}">ADD POST</button>
                     </div>
                     <div class="col col-auto">
                         <ul class="navbar-nav mr-auto">
@@ -77,6 +77,7 @@ and open the template in the editor.
             {% else %}
             <script >
                 const user = "{{user.username}}";
+                const author_id = "{{user.id}}";
             </script>
             <!--<div style="display: none;">{% csrf_token %}</div>-->
             <div id="result-row" class="row justify-content-sm-start align-items-start"></div>
