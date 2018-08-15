@@ -1,32 +1,31 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
-from .models import Posts
+from .models import Post
 
 
-class UserInfoSerializer(serializers.HyperlinkedModelSerializer):
+class UserBaseSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = User
-        fields = ('id', 'url', 'first_name', 'last_name', 'username')
+        model = get_user_model()
+        fields = ['id', 'url', 'first_name', 'last_name', 'username']
 
 
-class PostListSerializer(serializers.HyperlinkedModelSerializer):
+class PostBaseSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Posts
-        fields = ('id', 'url', 'title', 'created')
+        model = Post
+        fields = ['id', 'url', 'title', 'created']
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    posts = PostListSerializer(many=True, read_only=True)
+class UserSerializer(UserBaseSerializer):
+    posts = PostBaseSerializer(many=True, read_only=True)
 
-    class Meta:
-        model = User
-        fields = ('url', 'id', 'username', 'posts', 'first_name', 'last_name')
+    class Meta(UserBaseSerializer.Meta):
+        fields = ['posts'] + UserBaseSerializer.Meta.fields
 
 
-class PostDetailSerializer(serializers.HyperlinkedModelSerializer):
-    author = UserInfoSerializer(read_only=True)
+class PostSerializer(PostBaseSerializer, serializers.HyperlinkedModelSerializer):
+    author = UserBaseSerializer(read_only=True)
 
-    class Meta:
-        model = Posts
-        fields = ('url', 'id', 'title', 'text', 'created', 'author', 'last_modified', 'is_published')
+    class Meta(PostBaseSerializer.Meta):
+        fields = ['text', 'author', 'last_modified', 'is_published'] + PostBaseSerializer.Meta.fields
+

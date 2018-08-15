@@ -33,10 +33,10 @@ class PostsRouter(routers.SimpleRouter):
 router = routers.DefaultRouter()
 router.register(r'', views.UserViewSet, base_name='user')
 routerPosts = PostsRouter()
-routerPosts.register(r'', views.PostsViewSet, base_name='posts')
+routerPosts.register(r'', views.PostsViewSet, base_name='post')
 
 urlpatterns = [
     url(r'^users/', include(router.urls)),
-    url(r'^create/$', views.PostsViewSet.as_view({'post': 'create'}), name='posts-create'),
+    url(r'^create/$', views.PostsViewSet.as_view({'post': 'create'}), name='post-create'),
     url(r'', include(routerPosts.urls)),
                ]

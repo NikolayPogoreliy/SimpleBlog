@@ -45,14 +45,14 @@ and open the template in the editor.
                                 <a id="all-users-link" data-url="{% url 'user-list' %}" data-method="get" class="nav-link all-users-link prevented" href="{% url 'user-list' %}">Authors</a>
                             </li>
                             <li class="nav-item">
-                                <a id="all-posts-link" data-url="{% url 'posts-list' %}" data-method="get" class="nav-link all-posts-link prevented" href="{% url 'posts-list' %}">Articles</a>
+                                <a id="all-posts-link" data-url="{% url 'post-list' %}" data-method="get" class="nav-link all-posts-link prevented" href="{% url 'post-list' %}">Articles</a>
                             </li>
                             {% endif %}
                         </ul>
                     </div>
                     {% if user.is_authenticated %}
                     <div class="col col-sm-12 col-md-2">
-                        <button class="btn btn-block btn-add-post" data-url="{% url 'posts-create' %}">ADD POST</button>
+                        <button class="btn btn-block btn-add-post" data-url="{% url 'post-create' %}">ADD POST</button>
                     </div>
                     <div class="col col-auto">
                         <ul class="navbar-nav mr-auto">
